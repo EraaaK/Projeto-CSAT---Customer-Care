@@ -1,4 +1,5 @@
 import requests
+import json
 
 # Headers
 headers = {
@@ -27,12 +28,20 @@ for row in dic_request:
 # print(id)
 
 # # Montar nova requisição com dados filtrados
-for row in len(number_protocol):
-    print(row)
-    details = requests.get(f'https://api.directtalk.com.br/1.10/info/contacts/[{row["id"]}]/detail', headers=headers)
+
+dataList = []
+for i in range(len(number_protocol)):
+    # print(row)
+    details = requests.get(
+        f'https://api.directtalk.com.br/1.10/info/contacts/' + number_protocol[i] + '/detail', headers=headers)
+
+    fulldataViewContent = json.loads(details.content)
+    dataList.append(fulldataViewContent)
+    print("Protocolo:" +
+          str(number_protocol[i]) + "\nStatus:" + str(dataList[i]['state']))
+
 
 # # Exibir resultados details
-
 
 print(details.json())
 
