@@ -5,10 +5,9 @@ import app_data
 
 class HiPlatformAPI:
     def __init__(self):
-        pass
+        self.auth = app_data.GenericActions.BasicAuthenticator()
 
-    def GetProtocolsByDate():
-        auth = app_data.GenericActions.BasicAuthenticator()
+    def GetProtocolsByDate(self, **kwargs):
 
         # params
         channel = 'HiChat'
@@ -18,7 +17,7 @@ class HiPlatformAPI:
         data = requests.get(
             f'https://api.directtalk.com.br/1.10/info/contacts/?startDate=' +
             startDate + '&endDate=' + endDate + '&channel=' + channel,
-            headers=auth)
+            headers=self.auth)
 
         fullData = json.loads(data.content)
         protocolNumberList = []
@@ -27,19 +26,22 @@ class HiPlatformAPI:
 
         return protocolNumberList
 
-    def GetDialogsByProtocol():
-        protocolNumber = HiPlatformAPI.GetProtocolsByDate()
-        auth = app_data.GenericActions.BasicAuthenticator()
+    def GetDialogsByProtocol(self, **kwargs):
+        protocolNumber = HiPlatformAPI().GetProtocolsByDate()
 
         dataList = []
         for i in range(len(protocolNumber)):
             data = requests.get(
-                f'https://api.directtalk.com.br/1.10/info/contacts/' + protocolNumber[i] + '/detail', headers=auth)
+                f'https://api.directtalk.com.br/1.10/info/contacts/' + protocolNumber[i] + '/detail', headers=self.auth)
 
             fulldataViewContent = json.loads(data.content)
             dataList.append(fulldataViewContent)
             print("Protocolo: " +
                   str(protocolNumber[i]) + " Status: " + str(dataList[i]['state']))
 
+    def GetTimeLineConsumerName(self, **kwargs):
+        pass
 
-HiPlatformAPI.GetDialogsByProtocol()
+
+start = HiPlatformAPI()
+start.GetDialogsByProtocol()
