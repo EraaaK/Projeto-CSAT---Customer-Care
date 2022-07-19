@@ -27,7 +27,7 @@ for row in dic_request:
 # print(id)
 
 # # Montar nova requisição com dados filtrados
-for row in number_protocol:
+for row in len(number_protocol):
     print(row)
     details = requests.get(f'https://api.directtalk.com.br/1.10/info/contacts/[{row["id"]}]/detail', headers=headers)
 
