@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from ssl import OP_NO_RENEGOTIATION
 import requests
 import json
@@ -38,8 +39,8 @@ class HiPlatformAPI:
     def GetBotProtocolByDate(self, **kwargs):
         # params
         channel = 'HiBot'
-        dateValue1 = datetime.datetime(2022, 7, 20, 00, 00, 00)
-        dateValue2 = datetime.datetime(2022, 7, 20, 23, 59, 59)
+        dateValue1 = datetime.datetime(2022, 7, 20, 14, 00, 00)
+        dateValue2 = datetime.datetime(2022, 7, 20, 15, 59, 59)
         startDate = str(datetime.datetime.timestamp(
             dateValue1))
         endDate = str(datetime.datetime.timestamp(
@@ -73,24 +74,10 @@ class HiPlatformAPI:
             tupleValues = (protocolNumber[i], dataList[i])
             fullDataView.append(tupleValues)
 
+        consumerName = fullDataView[82][1]['properties'][4]['value']
+        consumerReview = fullDataView[82][1]['properties'][9]['value']
+        print("PING")
         return fullDataView
-
-    def GetTimeLineConsumerName(self, **kwargs):
-        #dialogsData = HiPlatformAPI().GetDialogsByProtocol()
-        eventTypeName = 'Hi.Bot'
-
-        # for i in range(len(dialogsData)):
-        #originData = dialogsData[i][0]
-        #originDataOnlyNumbers = re.sub("\-", "", originData)
-
-        originId = 'fc6834c3-d0d4-4edf-9389-89938d5551a1'
-        # timelineApiGetInfo = 'https://history-api.hiplatform.com/1.0/api/event?eventTypeName=' + \
-        #eventTypeName + '&originID=' + originId
-        timelineApiGetInfo = 'https://history-api.hiplatform.com/1.0/api/event?eventTypeName=' + \
-            eventTypeName + '&originID=' + originId
-        response = requests.get(timelineApiGetInfo, headers=self.auth)
-        fullTimeLineData = json.loads(response.content)
-        timeLineData = fullTimeLineData['data']
 
 
 start = HiPlatformAPI()
