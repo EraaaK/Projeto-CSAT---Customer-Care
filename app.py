@@ -1,7 +1,11 @@
+from ssl import OP_NO_RENEGOTIATION
 import requests
 import json
 import app_data
-
+import asyncio
+import time
+import datetime
+import re
 
 class HiPlatformAPI:
     def __init__(self):
@@ -11,8 +15,12 @@ class HiPlatformAPI:
 
         # params
         channel = 'HiChat'
-        startDate = '1654044972'
-        endDate = '1656377772'
+        dateValue1 = datetime.datetime(2022, 7, 18, 00, 00, 00)
+        dateValue2 = datetime.datetime(2022, 7, 18, 23, 59, 59)
+        startDate = str(datetime.datetime.timestamp(
+            dateValue1))
+        endDate = str(datetime.datetime.timestamp(
+            dateValue2))
 
         data = requests.get(
             f'https://api.directtalk.com.br/1.10/info/contacts/?startDate=' +
@@ -34,14 +42,33 @@ class HiPlatformAPI:
             data = requests.get(
                 f'https://api.directtalk.com.br/1.10/info/contacts/' + protocolNumber[i] + '/detail', headers=self.auth)
 
-            fulldataViewContent = json.loads(data.content)
-            dataList.append(fulldataViewContent)
-            print("Protocolo: " +
-                  str(protocolNumber[i]) + " Status: " + str(dataList[i]['state']))
+            loadData = json.loads(data.content)
+            dataList.append(loadData)
+            # print("Protocolo: " +
+            #      str(protocolNumber[i]) + " Status: " + str(dataList[i]['state']))
+        fullDataView = []
+        for i in range(len(protocolNumber)):
+            tupleValues = (protocolNumber[i], dataList[i])
+            fullDataView.append(tupleValues)
+
+        return fullDataView
 
     def GetTimeLineConsumerName(self, **kwargs):
-        pass
+        dialogsData = HiPlatformAPI().GetDialogsByProtocol()
+        eventTypeName = 'DT.Chat'
+
+        for i in range(dialogsData):
+            originData = dialogsData[i][0]
+            originDataOnlyNumbers = re.sub("\-","", originData)
+            
+
+            #originId = '160411461'
+            timelineApiGetInfo = 'https://history-api.hiplatform.com/1.0/api/event?eventTypeName=' + \
+                eventTypeName + '&originID=' + originId
+            response = requests.get(timelineApiGetInfo, headers=self.auth)
+            fullTimeLineData = json.loads(response.content)
+            timeLineData = fullTimeLineData['data']
 
 
 start = HiPlatformAPI()
-start.GetDialogsByProtocol()
+asyncio.run(start.GetTimeLineConsumerName())
