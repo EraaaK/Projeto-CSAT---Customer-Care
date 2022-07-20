@@ -7,11 +7,12 @@ import time
 import datetime
 import re
 
+
 class HiPlatformAPI:
     def __init__(self):
         self.auth = app_data.GenericActions.BasicAuthenticator()
 
-    def GetProtocolsByDate(self, **kwargs):
+    def GetChatProtocolsByDate(self, **kwargs):
 
         # params
         channel = 'HiChat'
@@ -34,9 +35,30 @@ class HiPlatformAPI:
 
         return protocolNumberList
 
-    def GetDialogsByProtocol(self, **kwargs):
-        protocolNumber = HiPlatformAPI().GetProtocolsByDate()
+    def GetBotProtocolByDate(self, **kwargs):
+        # params
+        channel = 'HiBot'
+        dateValue1 = datetime.datetime(2022, 7, 20, 00, 00, 00)
+        dateValue2 = datetime.datetime(2022, 7, 20, 23, 59, 59)
+        startDate = str(datetime.datetime.timestamp(
+            dateValue1))
+        endDate = str(datetime.datetime.timestamp(
+            dateValue2))
 
+        data = requests.get(
+            f'https://api.directtalk.com.br/1.10/info/contacts/?startDate=' +
+            startDate + '&endDate=' + endDate + '&channel=' + channel,
+            headers=self.auth)
+
+        fullData = json.loads(data.content)
+        protocolNumberList = []
+        for row in fullData:
+            protocolNumberList.append(row['protocolNumber'])
+
+        return protocolNumberList
+
+    def GetDialogsByProtocol(self, **kwargs):
+        protocolNumber = HiPlatformAPI().GetBotProtocolByDate()
         dataList = []
         for i in range(len(protocolNumber)):
             data = requests.get(
@@ -54,21 +76,22 @@ class HiPlatformAPI:
         return fullDataView
 
     def GetTimeLineConsumerName(self, **kwargs):
-        dialogsData = HiPlatformAPI().GetDialogsByProtocol()
-        eventTypeName = 'DT.Chat'
+        #dialogsData = HiPlatformAPI().GetDialogsByProtocol()
+        eventTypeName = 'Hi.Bot'
 
-        for i in range(dialogsData):
-            originData = dialogsData[i][0]
-            originDataOnlyNumbers = re.sub("\-","", originData)
-            
+        # for i in range(len(dialogsData)):
+        #originData = dialogsData[i][0]
+        #originDataOnlyNumbers = re.sub("\-", "", originData)
 
-            #originId = '160411461'
-            timelineApiGetInfo = 'https://history-api.hiplatform.com/1.0/api/event?eventTypeName=' + \
-                eventTypeName + '&originID=' + originId
-            response = requests.get(timelineApiGetInfo, headers=self.auth)
-            fullTimeLineData = json.loads(response.content)
-            timeLineData = fullTimeLineData['data']
+        originId = 'fc6834c3-d0d4-4edf-9389-89938d5551a1'
+        # timelineApiGetInfo = 'https://history-api.hiplatform.com/1.0/api/event?eventTypeName=' + \
+        #eventTypeName + '&originID=' + originId
+        timelineApiGetInfo = 'https://history-api.hiplatform.com/1.0/api/event?eventTypeName=' + \
+            eventTypeName + '&originID=' + originId
+        response = requests.get(timelineApiGetInfo, headers=self.auth)
+        fullTimeLineData = json.loads(response.content)
+        timeLineData = fullTimeLineData['data']
 
 
 start = HiPlatformAPI()
-asyncio.run(start.GetTimeLineConsumerName())
+start.GetDialogsByProtocol()
