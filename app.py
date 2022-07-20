@@ -1,12 +1,8 @@
-from pyexpat.errors import messages
-from ssl import OP_NO_RENEGOTIATION
 import requests
 import json
 import app_data
-import asyncio
-import time
+
 import datetime
-import re
 
 
 class HiPlatformAPI:
@@ -79,6 +75,10 @@ class HiPlatformAPI:
         print("PING")
         return fullDataView
 
+    def GoogleSheetsExport(self, **kwargs):
+        # realizar integração com o Sheets
+        pass
+
 
 start = HiPlatformAPI()
-start.GetDialogsByProtocol()
+start.GoogleSheetsExport()
