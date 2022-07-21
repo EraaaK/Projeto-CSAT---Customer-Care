@@ -63,8 +63,6 @@ class HiPlatformAPI:
 
             loadData = json.loads(data.content)
             dataList.append(loadData)
-            # print("Protocolo: " +
-            #      str(protocolNumber[i]) + " Status: " + str(dataList[i]['state']))
         fullDataView = []
         for i in range(len(protocolNumber)):
             tupleValues = (protocolNumber[i], dataList[i])

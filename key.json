@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "projetocsatcustomercare",
+  "private_key_id": "9e110611a422fd89f697e0a2f310214740e2cd24",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDGzCz0Hytud8JX\nQvfSJSx5v0FmN6WcGXzTJpHwsB6X939Li52DXtqoaJgNLYWI40uIyBYixKQF7+dm\nb5z5nthdW+zHJq8JFJgAfvv5P8WzUdI13F8cfTATpBlhaTibnNdq/Wk1LB6zIYx3\nP5FogyiXjcikEYOHTlCRsbkLh6Mvip2t2gbNP7bvDuYoYKlpi4hUEXCGO1NwQcOk\nE4i4AOvryzclwmcXjFP/Y3xisTCPZA+kFoEpk26A0JWKnpS+219iw02tfQBC0rUX\nKdibzecFkClVsoPkxQJWoD/CxjALHMd23ujAb8Ck2FTeA0RpAHYMwiboKGOXgiJn\nH57XkbAbAgMBAAECggEAPTDGm4PmnfOd7bcuyc/obzcX/cseHjzYJ7RFEqVbXWJw\nm8PHQZMWUeUT/GZpJnf0HY+dBKmrZSpxex3a3xjuN1peuPQmx3A/01NC4vcmtun1\n/t8spXvBKyKFL28wXfG6evOyiQviDThD4Ma/zsAkY/Xf7uR3LFRGR3pBX5Op/q0s\nYrClNdz4qEXIl0nOL/wQoCNwvnqG/ENkI7uhG8ollRdt8sOVvZZtzlQYFRHW0wZT\ni0lIIdm3y+IF6EAN2Z0reKF7PYXeJZRRjPeIheLxq8YyTjIMQObvAUHiJQVFtXWL\nhmhTmgRCOKTCdCSKFBpDftrRrPhkyx4WhStzRTAdrQKBgQDxwWzyR+rTnN8OcLkg\nXxJhwoKjPFHlOsVch3s2pAwbi2Ubbm2u+ZspS0fy/kWGFJ+s20BM2oaU+SyJNfRU\nddlkDTeCqgtOarIRgIc5U1z90szicgV3bLQagNQbjYioAt+pTnlGxakm3m3HmjTz\nthi8fbgxOalR04P52Dc4ciUsrwKBgQDSgsiETI1CVQFDhC0y4zFb3cUhsc5OD2JY\nDyO9rp57WM2s3902WP0vpKu4sBbEfZUgG2J0dTMqveBK98BwczQbvFPPcUEH2UbE\nH5PtOrQ26ZP/Tam0lM7IX3QDYPXYjp2d7ULNrNUNXJ2Ki0KW65Bpo3d47G6C4FNx\niC0EvZ5GVQKBgQCw597mSBQhd7iN45TEiG12FhTsiFZRTLlhZU6XhGHLwixhb2RZ\n1xNgm1LyEHkljW/u2J3r3zj+SHv7h/zb1UUX/sfxGKefYVoejpPlMghpQNlmlxNC\n+cutXTpZUy996mRqix8Z18hYxglFN6Wp9UWSoNipRM2PMB1yNXLrHjPvxwKBgE9d\nR0O5qLgNXECcIH5C8WT1I1Eku+bqHeWdL5hfsRhHzqMSc0/+FNZVevhSSwMhZYuJ\nR4EofnXqyBj7du3uQQMD6YUX6bCP1gIy9Y5Gx5K8VTO3j/eo8pzQf+iWMZnHitzz\ninAIbPpwpGSLRDup6/Qn0O8iFDf7Yvo2oOJcqsNRAoGAalauXoNhJHPOy1YI3LEy\nqdfOYM56nLxVZB3C5NoTHEzAbPWlbanZEdPZ2Y+M4q5kSmvidGWLxOKX/1eqOuAB\n6c43EO7wPT9ky8U/NS8GI4K9AwdEgU0UtYmxyxfslOt11tXodeqEziiKHO8PEJeD\nBhacGkreCv8lFNCtJe58Y4w=\n-----END PRIVATE KEY-----\n",
+  "client_email": "python-connect-sheets@projetocsatcustomercare.iam.gserviceaccount.com",
+  "client_id": "118041236673060558281",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/python-connect-sheets%40projetocsatcustomercare.iam.gserviceaccount.com"
+}
