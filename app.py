@@ -1,8 +1,10 @@
 import requests
+from dotenv import load_dotenv, find_dotenv
 import json
 import app_data
-
 import datetime
+import gspread
+import os
 
 
 class HiPlatformAPI:
@@ -13,8 +15,8 @@ class HiPlatformAPI:
 
         # params
         channel = 'HiChat'
-        dateValue1 = datetime.datetime(2022, 7, 18, 00, 00, 00)
-        dateValue2 = datetime.datetime(2022, 7, 18, 23, 59, 59)
+        dateValue1 = datetime.datetime(2022, 7, 21, 14, 00, 00)
+        dateValue2 = datetime.datetime(2022, 7, 21, 15, 40, 00)
         startDate = str(datetime.datetime.timestamp(
             dateValue1))
         endDate = str(datetime.datetime.timestamp(
@@ -67,15 +69,25 @@ class HiPlatformAPI:
         for i in range(len(protocolNumber)):
             tupleValues = (protocolNumber[i], dataList[i])
             fullDataView.append(tupleValues)
-
-        consumerName = fullDataView[82][1]['properties'][4]['value']
-        consumerReview = fullDataView[82][1]['properties'][9]['value']
-        print("PING")
         return fullDataView
 
     def GoogleSheetsExport(self, **kwargs):
-        # realizar integração com o Sheets
-        pass
+        load_dotenv(find_dotenv("keys.env"))
+        code = os.environ.get('CODE')
+
+        data = HiPlatformAPI().GetDialogsByProtocol()
+
+        gc = gspread.service_account(filename='key.json')
+        sh = gc.open_by_key(code)
+        ws = sh.worksheet('CSAT')
+
+        for i in range(len(data)):
+            consumerName = data[i][1]['properties'][4]['value']
+            consumerReview = data[i][1]['properties'][9]['value']
+            ws.update_cell(1, 1, "Identificação")
+            ws.update_cell(1, 2, "Nota")
+            #ws.update
+
 
 
 start = HiPlatformAPI()
