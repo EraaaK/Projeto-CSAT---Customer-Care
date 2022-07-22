@@ -1,3 +1,4 @@
+from concurrent.futures import thread
 import requests
 from dotenv import load_dotenv, find_dotenv
 import json
@@ -5,6 +6,7 @@ import app_data
 import datetime
 import gspread
 import os
+import threading
 
 
 class HiPlatformAPI:
@@ -53,6 +55,7 @@ class HiPlatformAPI:
         protocolNumberList = []
         for row in fullData:
             protocolNumberList.append(row['protocolNumber'])
+            print("Protocolo " + row['protocolNumber'] + " retornado")
 
         return protocolNumberList
 
@@ -69,6 +72,7 @@ class HiPlatformAPI:
         for i in range(len(protocolNumber)):
             tupleValues = (protocolNumber[i], dataList[i])
             fullDataView.append(tupleValues)
+            print(str(i) + "dado inserido")
         return fullDataView
 
     def GoogleSheetsExport(self, **kwargs):
@@ -81,14 +85,24 @@ class HiPlatformAPI:
         sh = gc.open_by_key(code)
         ws = sh.worksheet('CSAT')
 
+        rowIndex = 2
         for i in range(len(data)):
             consumerName = data[i][1]['properties'][4]['value']
             consumerReview = data[i][1]['properties'][9]['value']
-            ws.update_cell(1, 1, "Identificação")
-            ws.update_cell(1, 2, "Nota")
-            #ws.update
+            ws.update_acell('A1', "Identificação")
+            ws.update_acell('B1', "Nota")
+            ws.format('A1:B1', {'textFormat': {'bold': True}})
 
+            ws.update_cell(rowIndex, 1, consumerName)
+            ws.update_cell(rowIndex, 2, consumerReview)
+            rowIndex += 1
 
 
 start = HiPlatformAPI()
+
+threading.Thread(target=start.GetBotProtocolByDate)
+threading.Thread(target=start.GetDialogsByProtocol)
+threading.Thread(target=start.GoogleSheetsExport)
+
+print("PING")
 start.GoogleSheetsExport()
